@@ -1,14 +1,13 @@
-package com.example.shoppinglist
+package com.example.shoppinglist.presentation
 
 import android.os.Bundle
-import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
-import com.example.shoppinglist.presentation.MainViewModel
-import com.example.shoppinglist.presentation.ShopListAdapter
+import com.example.shoppinglist.R
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 class MainActivity : AppCompatActivity() {
     private lateinit var viewModel: MainViewModel
@@ -21,14 +20,26 @@ class MainActivity : AppCompatActivity() {
         viewModel.shopList.observe(this, Observer {
             adapter.submitList(it)
         })
+
+        val buttonAddItem = findViewById<FloatingActionButton>(R.id.floatingActionButton)
+        buttonAddItem.setOnClickListener {
+            val intent = ShopItemActivity.newIntentAddItem(this)
+            startActivity(intent)
+        }
     }
 
-    private fun setupRecyclerView(){
+    private fun setupRecyclerView() {
         val rvShopList = findViewById<RecyclerView>(R.id.rcView)
         adapter = ShopListAdapter()
         rvShopList.adapter = adapter
-        rvShopList.recycledViewPool.setMaxRecycledViews(ShopListAdapter.LAYOUT_ENABLED, ShopListAdapter.MAX_POOL_SIZE)
-        rvShopList.recycledViewPool.setMaxRecycledViews(ShopListAdapter.LAYOUT_DISABLED, ShopListAdapter.MAX_POOL_SIZE)
+        rvShopList.recycledViewPool.setMaxRecycledViews(
+            ShopListAdapter.LAYOUT_ENABLED,
+            ShopListAdapter.MAX_POOL_SIZE
+        )
+        rvShopList.recycledViewPool.setMaxRecycledViews(
+            ShopListAdapter.LAYOUT_DISABLED,
+            ShopListAdapter.MAX_POOL_SIZE
+        )
         setupLongClickListener()
         setupOnClickListener()
         setupSwipeListener(rvShopList)
@@ -58,7 +69,8 @@ class MainActivity : AppCompatActivity() {
 
     private fun setupOnClickListener() {
         adapter.onShopItemClickListener = {
-            Log.d("MyLog", "Click shop item")
+            val intent = ShopItemActivity.newIntentEditItem(this, it.id)
+            startActivity(intent)
         }
     }
 
