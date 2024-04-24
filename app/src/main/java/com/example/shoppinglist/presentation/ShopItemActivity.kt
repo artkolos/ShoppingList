@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
 import android.widget.Button
 import android.widget.EditText
 import androidx.lifecycle.ViewModelProvider
@@ -23,7 +24,9 @@ class ShopItemActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_shop_item)
         parseIntent()
-        launchRightMode()
+        if (savedInstanceState == null){
+            launchRightMode()
+        }
     }
     private fun launchRightMode(){
         val fragment =
@@ -32,7 +35,7 @@ class ShopItemActivity : AppCompatActivity() {
             MODE_ADD -> ShopItemFragment.newInstanceAddItem()
             else -> throw java.lang.RuntimeException("Unknown screen mode $screenMode")
         }
-    supportFragmentManager.beginTransaction().add(R.id.ship_item_container, fragment).commit()
+    supportFragmentManager.beginTransaction().replace(R.id.ship_item_container, fragment).commit()
     }
     private fun parseIntent() {
         if (!intent.hasExtra(EXTRA_SCREEN_MODE)) {

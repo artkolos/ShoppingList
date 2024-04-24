@@ -6,6 +6,10 @@ import com.example.shoppinglist.domain.ShopItem
 import com.example.shoppinglist.domain.ShopListRepository
 import kotlin.random.Random
 
+/**
+ * репозиторий реализующий интерфейс ShopListRepository
+ * @implements ShopListRepository
+ */
 object ShopListRepositoryImpl : ShopListRepository {
 
     private val shopList = sortedSetOf<ShopItem>({ p0, p1 -> p0.id.compareTo(p1.id) })
