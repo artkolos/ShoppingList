@@ -8,6 +8,10 @@ import androidx.lifecycle.ViewModel
 import com.example.shoppinglist.data.ShopListRepositoryImpl
 import com.example.shoppinglist.domain.*
 
+/**
+ * Класс который поставляет данные на главный экран
+ * <img src="C:\Users\artem\AndroidStudioProjects\ShoppingList\doc\html\images\mvvm.png">
+ */
 class MainViewModel(application: Application):  AndroidViewModel(application){
 
     private val repository = ShopListRepositoryImpl
